@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML_project</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h2>Car Price Prediction</h2>
+    <div class="form-container">
+        <label for="model">Select Model:</label>
+        <select id="model">
+            <option value="linear">Linear Regression</option>
+            <option value="knn">KNN Regression</option>
+        </select>
+        <br>
+        <label for="year">Year:</label>
+        <input type="number" id="year" name="year"><br>
+        <label for="present_price">Present Price (in lakhs):</label>
+        <input type="number" id="present_price" name="present_price" step="0.01"><br>
+        <label for="kms_driven">Kms Driven:</label>
+        <input type="number" id="kms_driven" name="Kms_Driven"><br>
+        <label for="fuel_driven">Fuel type:</label>
+        <select id="fuel_type" name="Fuel_Type">
+            <option value="Petrol">Petrol</option>
+            <option value="Diesel">Diesel</option>
+            <option value="CNG">CNG</option>
+        </select><br>
+        <label for="seller_type">Seller type:</label>
+        <select id="seller_type" name="Seller_Type">
+            <option value="Dealer">Dealer</option>
+            <option value="Individual">Individual</option>
+        </select><br>
+        <label for="transmission">Transmission:</label>
+        <select id="transmission" name="Transmission">
+            <option value="Manual">Manual</option>
+            <option value="Automatic">Automatic</option>
+        </select><br>
+        <label for="owner">Owner:</label>
+        <input type="number" id="owner" name="Owner"><br>
+        <button onclick="predict()">Predict</button>
+    </div>
+    <div id="result-container" style="display:none;">
+        <h3>Predicted Selling Price:</h3>
+        <div id="result" class="prediction-output"></div>
+    </div>
+
+    <script>
+        async function predict() {
+            const data = {
+                Year: parseInt(document.getElementById('year').value),
+                Present_Price: parseFloat(document.getElementById('present_price').value),
+                Kms_Driven: parseInt(document.getElementById('kms_driven').value),
+                Fuel_Type: document.getElementById('fuel_type').value,
+                Seller_Type: document.getElementById('seller_type').value,
+                Transmission: document.getElementById('transmission').value,
+                Owner: parseInt(document.getElementById('owner').value)
+            };
+            const response = await fetch('http://localhost:8000/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            document.getElementById('result').innerText =
+                `KNN Prediction: ${result.knn_prediction}\nLinear Regression Prediction: ${result.linear_regression_prediction}`;
+            document.getElementById('result-container').style.display = 'block';
+        }
+    </script>
+
+</body>
+
+</html>
