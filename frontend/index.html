@@ -47,9 +47,16 @@
         <h3>Predicted Selling Price:</h3>
         <div id="result" class="prediction-output"></div>
     </div>
+    <div id="dialog" class="dialog" style="display:none;">
+        <div class="dialog-content">
+            <span id="close-dialog" class="close">&times;</span>
+            <p id="dialog-message"></p>
+        </div>
+    </div>
 
     <script>
         async function predict() {
+            const model = document.getElementById('model').value;
             const data = {
                 Year: parseInt(document.getElementById('year').value),
                 Present_Price: parseFloat(document.getElementById('present_price').value),
@@ -65,11 +72,65 @@
                 body: JSON.stringify(data)
             });
             const result = await response.json();
-            document.getElementById('result').innerText =
-                `KNN Prediction: ${result.knn_prediction}\nLinear Regression Prediction: ${result.linear_regression_prediction}`;
+            let output = '';
+            if (model === 'knn') {
+                output = `KNN Prediction: ${result.knn_prediction} Lakhs`;
+            } else {
+                output = `Linear Regression Prediction: ${result.linear_regression_prediction} Lakhs`;
+            }
+            document.getElementById('result').innerText = output;
             document.getElementById('result-container').style.display = 'block';
+            // Show dialog
+            document.getElementById('dialog-message').innerText = output;
+            document.getElementById('dialog').style.display = 'block';
+        }
+        document.getElementById('close-dialog').onclick = function () {
+            document.getElementById('dialog').style.display = 'none';
+        };
+        window.onclick = function (event) {
+            if (event.target == document.getElementById('dialog')) {
+                document.getElementById('dialog').style.display = 'none';
+            }
         }
     </script>
+    <style>
+        .dialog {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .dialog-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 300px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 
 </body>
 
