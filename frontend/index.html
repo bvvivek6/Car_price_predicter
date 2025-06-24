@@ -74,9 +74,9 @@
             const result = await response.json();
             let output = '';
             if (model === 'knn') {
-                output = `KNN Prediction: ${result.knn_prediction} Lakhs`;
+                output = `KNN Prediction: ${result.knn_prediction.toFixed(2)} Lakhs`;
             } else {
-                output = `Linear Regression Prediction: ${result.linear_regression_prediction} Lakhs`;
+                output = `Linear Regression Prediction: ${result.linear_regression_prediction.toFixed(2)} Lakhs`;
             }
             document.getElementById('result').innerText = output;
             document.getElementById('result-container').style.display = 'block';
