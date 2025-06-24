@@ -4,9 +4,10 @@ import joblib
 from pydantic import BaseModel
 import numpy as np
 
-mappings = joblib.load('models/mappings.pkl')
-knn_model = joblib.load('models/knn_regression_model.pkl')
-linear_model = joblib.load('models/linear_regression_model.pkl')
+# Use relative paths for model files
+mappings = joblib.load('./models/mappings.pkl')
+knn_model = joblib.load('./models/knn_regression_model.pkl')
+linear_model = joblib.load('./models/linear_regression_model.pkl')
 
 app = FastAPI()
 

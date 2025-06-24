@@ -300,3 +300,22 @@ brio,2015,4,5.9,60000,Petrol,Dealer,Manual,0
 city,2009,3.35,11,87934,Petrol,Dealer,Manual,0
 city,2017,11.5,12.5,9000,Diesel,Dealer,Manual,0
 brio,2016,5.3,5.9,5464,Petrol,Dealer,Manual,0
+alto,2000,0.35,2.10,125000,Petrol,Individual,Manual,1
+indica,2003,0.45,2.50,110000,Diesel,Dealer,Manual,1
+santro,2006,0.75,3.00,95000,Petrol,Individual,Manual,0
+swift,2009,1.25,4.95,88000,Diesel,Dealer,Manual,1
+i10,2011,1.95,5.10,67000,Petrol,Individual,Manual,0
+wagon r,2012,2.10,5.50,59000,Petrol,Dealer,Manual,0
+ertiga,2013,3.95,7.80,72000,Diesel,Dealer,Manual,0
+ciaz,2014,4.50,9.20,41000,Petrol,Dealer,Manual,0
+baleno,2015,5.75,8.50,34000,Petrol,Dealer,Manual,0
+scorpio,2016,7.80,12.40,28000,Diesel,Dealer,Manual,0
+city,2017,8.65,13.60,23000,Petrol,Dealer,Manual,0
+creta,2018,10.25,15.80,20000,Diesel,Dealer,Automatic,0
+venue,2019,9.95,14.90,17000,Petrol,Dealer,Manual,0
+harrier,2020,16.25,21.50,15000,Diesel,Dealer,Manual,0
+sonet,2021,10.10,13.90,11000,Petrol,Dealer,Automatic,0
+i20,2022,9.40,11.60,8000,Petrol,Dealer,Manual,0
+fronx,2023,10.25,12.10,4000,Petrol,Dealer,Manual,0
+xuv700,2024,18.45,20.00,2000,Diesel,Dealer,Automatic,0
+swift,2025,8.95,9.75,1200,Petrol,Dealer,Manual,0
