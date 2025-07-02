@@ -10,43 +10,96 @@
 </head>
 
 <body>
-    <h2>Car Price Prediction</h2>
-    <div class="form-container">
-        <label for="model">Select Model:</label>
-        <select id="model">
-            <option value="linear">Linear Regression</option>
-            <option value="knn">KNN Regression</option>
-        </select>
-        <br>
-        <label for="year">Year:</label>
-        <input type="number" id="year" name="year"><br>
-        <label for="present_price">Present Price (in lakhs):</label>
-        <input type="number" id="present_price" name="present_price" step="0.01"><br>
-        <label for="kms_driven">Kms Driven:</label>
-        <input type="number" id="kms_driven" name="Kms_Driven"><br>
-        <label for="fuel_driven">Fuel type:</label>
-        <select id="fuel_type" name="Fuel_Type">
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="CNG">CNG</option>
-        </select><br>
-        <label for="seller_type">Seller type:</label>
-        <select id="seller_type" name="Seller_Type">
-            <option value="Dealer">Dealer</option>
-            <option value="Individual">Individual</option>
-        </select><br>
-        <label for="transmission">Transmission:</label>
-        <select id="transmission" name="Transmission">
-            <option value="Manual">Manual</option>
-            <option value="Automatic">Automatic</option>
-        </select><br>
-        <label for="owner">Owner:</label>
-        <input type="number" id="owner" name="Owner"><br>
-        <button onclick="predict()">Predict</button>
-    </div>
-    <div id="result-container" style="display:none;">
-        <h3>Predicted Selling Price:</h3>
-        <div id="result" class="prediction-output"></div>
+    <div class="app-container">
+        <div class="header">
+            <h1>🚗 Car Price Predictor</h1>
+            <p class="subtitle">Get accurate price predictions using AI models</p>
+        </div>
+
+        <div class="main-content">
+            <div class="form-card">
+                <div class="card-header">
+                    <h2>Enter Car Details</h2>
+                </div>
+
+                <form class="prediction-form">
+                    <div class="form-group">
+                        <label for="model">🤖 ML Model:</label>
+                        <select id="model" class="form-input">
+                            <option value="linear">Linear Regression</option>
+                            <option value="knn">KNN Regression</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="year">📅 Year:</label>
+                            <input type="number" id="year" name="year" class="form-input" placeholder="2020">
+                        </div>
+                        <div class="form-group">
+                            <label for="present_price">💰Price (Lakhs):</label>
+                            <input type="number" id="present_price" name="present_price" step="0.01" class="form-input"
+                                placeholder="10.5">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="kms_driven">🛣️ Kms Driven:</label>
+                            <input type="number" id="kms_driven" name="Kms_Driven" class="form-input"
+                                placeholder="50000">
+                        </div>
+                        <div class="form-group">
+                            <label for="owner">👤 Owner:</label>
+                            <input type="number" id="owner" name="Owner" class="form-input" placeholder="1">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fuel_type">⛽ Fuel Type:</label>
+                            <select id="fuel_type" name="Fuel_Type" class="form-input">
+                                <option value="">Select Fuel Type</option>
+                                <option value="Petrol">Petrol</option>
+                                <option value="Diesel">Diesel</option>
+                                <option value="CNG">CNG</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="seller_type">🏪 Seller Type:</label>
+                            <select id="seller_type" name="Seller_Type" class="form-input">
+                                <option value="">Select Seller Type</option>
+                                <option value="Dealer">Dealer</option>
+                                <option value="Individual">Individual</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transmission">⚙️ Transmission:</label>
+                        <select id="transmission" name="Transmission" class="form-input">
+                            <option value="">Select Transmission</option>
+                            <option value="Manual">Manual</option>
+                            <option value="Automatic">Automatic</option>
+                        </select>
+                    </div>
+
+                    <button type="button" onclick="predict()" class="predict-btn">
+                        <span class="btn-text">🔮 Predict Price</span>
+                        <div class="btn-loading" style="display: none;">
+                            <div class="spinner"></div>
+                            Analyzing...
+                        </div>
+                    </button>
+                </form>
+            </div>
+            <div id="result-container" class="result-card" style="display:none;">
+                <div class="result-header">
+                    <h3>📊 Prediction Result</h3>
+                </div>
+                <div id="result" class="prediction-output"></div>
+            </div>
+        </div>
     </div>
     <div id="dialog" class="dialog" style="display:none;">
         <div class="dialog-content">
@@ -58,6 +111,12 @@
     <script>
         async function predict() {
             const model = document.getElementById('model').value;
+            const btnText = document.querySelector('.btn-text');
+            const btnLoading = document.querySelector('.btn-loading');
+
+            btnText.style.display = 'none';
+            btnLoading.style.display = 'flex';
+
             const data = {
                 Year: parseInt(document.getElementById('year').value),
                 Present_Price: parseFloat(document.getElementById('present_price').value),
@@ -67,23 +126,31 @@
                 Transmission: document.getElementById('transmission').value,
                 Owner: parseInt(document.getElementById('owner').value)
             };
-            const response = await fetch('http://localhost:8000/predict', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(data)
-            });
-            const result = await response.json();
-            let output = '';
-            if (model === 'knn') {
-                output = `KNN Prediction: ${result.knn_prediction.toFixed(2)} Lakhs`;
-            } else {
-                output = `Linear Regression Prediction: ${result.linear_regression_prediction.toFixed(2)} Lakhs`;
+
+            try {
+                const response = await fetch('http://localhost:8000/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                let output = '';
+                if (model === 'knn') {
+                    output = `🎯 KNN Prediction: ₹${result.knn_prediction.toFixed(2)} Lakhs`;
+                } else {
+                    output = `📈 Linear Regression: ₹${result.linear_regression_prediction.toFixed(2)} Lakhs`;
+                }
+                document.getElementById('result').innerHTML = `<div class="price-display">${output}</div>`;
+                document.getElementById('dialog-message').innerHTML = output;
+                document.getElementById('dialog').style.display = 'block';
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error making prediction. Please try again.');
+            } finally {
+                // Reset button state
+                btnText.style.display = 'inline';
+                btnLoading.style.display = 'none';
             }
-            document.getElementById('result').innerText = output;
-            document.getElementById('result-container').style.display = 'block';
-            // Show dialog
-            document.getElementById('dialog-message').innerText = output;
-            document.getElementById('dialog').style.display = 'block';
         }
         document.getElementById('close-dialog').onclick = function () {
             document.getElementById('dialog').style.display = 'none';
@@ -95,42 +162,7 @@
         }
     </script>
     <style>
-        .dialog {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
 
-        .dialog-content {
-            background-color: #fff;
-            margin: 10% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 300px;
-            border-radius: 8px;
-            text-align: center;
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
     </style>
 
 </body>
