@@ -4,14 +4,12 @@ import joblib
 from pydantic import BaseModel
 import numpy as np
 
-# Use relative paths for model files
 mappings = joblib.load('./models/mappings.pkl')
 knn_model = joblib.load('./models/knn_regression_model.pkl')
 linear_model = joblib.load('./models/linear_regression_model.pkl')
 
 app = FastAPI()
 
-# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  
@@ -35,11 +33,11 @@ class CarFeatures(BaseModel):
 
 @app.post('/predict')
 def predict(features: CarFeatures):
-    # Encode categorical features
+
     fuel = mappings['Fuel_Type'][features.Fuel_Type]
     seller = mappings['Seller_Type'][features.Seller_Type]
     trans = mappings['Transmission'][features.Transmission]
-    # Prepare input for model
+
     input_data = np.array([[features.Year, features.Present_Price, features.Kms_Driven, fuel, seller, trans, features.Owner]])
     # Predict
     knn_pred = knn_model.predict(input_data)[0]
