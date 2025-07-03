@@ -169,21 +169,21 @@ POST /predict
 
 ```
 car-price-predictor/
-├── 📊 car data.csv                 
-├── 📓 main.ipynb                  
-├── 📋 requirements.txt             
-├── 📖 README.md                   
-├── 📄 PROJECT_REPORT.md          
+├── 📊 car data.csv
+├── 📓 main.ipynb
+├── 📋 requirements.txt
+├── 📖 README.md
+├── 📄 PROJECT_REPORT.md
 ├── 🌐 frontend/
-│   ├── 🏠 index.html             
-│   ├── 🎨 style.css              
-│   └── 🖼️ favicon.png            
+│   ├── 🏠 index.html
+│   ├── 🎨 style.css
+│   └── 🖼️ favicon.png
 └── 🔧 services/
-    ├── 🚀 api.py                   
+    ├── 🚀 api.py
     └── 🤖 models/
-        ├── 📦 knn_regression_model.pkl      
-        ├── 📦 linear_regression_model.pkl   
-        └── 📦 mappings.pkl                  
+        ├── 📦 knn_regression_model.pkl
+        ├── 📦 linear_regression_model.pkl
+        └── 📦 mappings.pkl
 ```
 
 ## 🧠 Models
